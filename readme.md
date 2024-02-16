@@ -12,3 +12,15 @@ The Web application provides reporting on activities carried out on the mobile a
 
 The HandyMate web application is developed using Laravel a PHP framework
  
+## Install PHP
+Before proceeding, make sure your computer has PHP installed. See these instructions to set up the project dependencies.
+
+## Install the project dependencies:
+
+npm install
+
+## Run the App
+The application can be accessed after running the artisan serve command:
+
+$ php artisan serve
+ 

@@ -1,0 +1,561 @@
+[19-Dec-2018 14:54:51 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 14:54:58 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:01:02 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:01:02 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:01:02 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:01:04 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:01:47 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:02:09 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:02:09 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:02:09 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:02:09 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:02:23 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:02:24 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:02:24 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:02:24 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:02:24 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:20:57 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:23:14 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:28:06 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:31:06 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:31:25 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:31:51 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:31:51 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:31:51 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:32:13 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:32:13 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:32:13 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:32:13 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:32:13 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 15:37:50 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 16:42:10 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[19-Dec-2018 16:42:11 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[20-Dec-2018 11:49:07 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[20-Dec-2018 11:49:09 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[20-Dec-2018 11:49:29 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:52:36 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:52:38 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:52:45 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:52:49 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:54:35 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:54:35 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:54:35 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:56:36 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:57:04 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:57:04 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:57:04 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:58:08 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:58:24 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:58:24 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:58:24 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:58:45 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:59:02 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:59:30 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:59:30 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:59:30 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:59:41 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 00:59:46 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 01:00:10 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 01:00:10 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 01:00:10 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 01:00:23 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 01:02:59 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 01:03:11 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 01:03:14 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 09:03:41 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 09:03:45 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 09:04:05 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 09:04:18 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[21-Dec-2018 09:04:37 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Undefined variable: e' in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php:47
+Stack trace:
+#0 /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php(47): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/probasepa...', 47, Array)
+#1 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(112): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/probasepay/rtsa.probasepay.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(89): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/probasepay/rtsa.probasepay.com/app/Exceptions/Handler.php on line 47
+[10-Jan-2019 07:28:19 UTC] PHP Fatal error:  Class 'App\WorkFlow' not found in /home/probasepay/rtsa.probasepay.com/app/Http/Controllers/ActionController.php on line 1298
+[11-Jan-2019 22:17:10 UTC] PHP Fatal error:  Class 'Input' not found in /home/probasepay/rtsa.probasepay.com/app/Http/Controllers/Auth/LoginController.php on line 51
+[11-Jan-2019 22:33:43 UTC] PHP Fatal error:  Class 'App\Http\Controllers\Auth\Hash' not found in /home/probasepay/rtsa.probasepay.com/app/Http/Controllers/Auth/LoginController.php on line 62
+[17-Jan-2019 13:36:19 UTC] PHP Fatal error:  Call to a member function toArray() on null in /home/probasepay/rtsa.probasepay.com/app/Http/Controllers/ActionController.php on line 405
+[18-Jan-2019 03:08:26 UTC] PHP Fatal error:  Call to a member function toArray() on null in /home/probasepay/rtsa.probasepay.com/app/Http/Controllers/ActionController.php on line 405
+[18-Jan-2019 08:59:43 UTC] PHP Parse error:  syntax error, unexpected '$d' (T_VARIABLE) in /home/probasepay/rtsa.probasepay.com/app/Http/Controllers/ActionController.php on line 1492
+[18-Jan-2019 16:03:32 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 82 bytes) in /home/probasepay/rtsa.probasepay.com/vendor/dompdf/dompdf/src/Css/Style.php on line 714
+[18-Jan-2019 16:03:42 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 77 bytes) in /home/probasepay/rtsa.probasepay.com/vendor/dompdf/dompdf/src/Css/Style.php on line 711
+[21-Jan-2019 23:48:28 UTC] PHP Fatal error:  Call to a member function where() on null in /home/probasepay/rtsa.probasepay.com/app/Http/Controllers/ActionController.php on line 487

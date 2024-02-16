@@ -1,0 +1,2052 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use \DateTime;
+use \Milon\Barcode\DNS1D;
+
+
+class ActionController extends Controller
+{
+	public function getDashboard()
+	{
+		//Generate Transaction per item
+		$taxbreakdown = \DB::table('transaction_breakdown')->where('item_name', '=', 'CARBON EMISSION')->limit(25)->get()->toArray();
+		$taxbreakdown1 = \DB::table('transaction_breakdown')->where('item_name', '=', 'FITNESS TEST')->limit(25)->get()->toArray();
+		$taxbreakdownSize = sizeof($taxbreakdown);
+		$taxbreakdown1Size = sizeof($taxbreakdown1);
+		$count = ($taxbreakdownSize > $taxbreakdown1Size) ? $taxbreakdown1Size : $taxbreakdownSize;
+		$taxbreakdown = ($taxbreakdownSize > $taxbreakdown1Size) ? array_merge($taxbreakdown1 , $taxbreakdown)  : array_merge($taxbreakdown , $taxbreakdown1);
+		
+		//dd($taxbreakdown);
+		
+		$arr = [];
+		$x1 = 0;
+		$x2 = 0;
+		$amt = 0;
+		for($y=0; $y<(50); $y++)
+		{
+			$amt = $amt + $taxbreakdown[$y]->amount;
+			$x = [
+				'key'=>$taxbreakdown[$y]->item_name,
+				'value'=>trim($amt),
+				//'date'=> date('m/d/Y H:i:s', strtotime('+'.$x2++.' hour', strtotime('11/27/2018 00:00')))
+				'date'=> DateTime::createFromFormat('m/d/Y H:i:s', date('m/d/Y H:i:s', strtotime('+'.$x2++.' hour', strtotime('11/27/2018 00:00'))))->format('m/d/Y H:i')
+				//date('Y-m-d H:i:s', strtotime('+'.$qtrsToMonths.' months', strtotime(date('Y-m-d H:i:s')
+			];
+			$arr[$x1++] = $x;
+			if($y==24)
+			{
+				$x2=0;
+				$amt = 0;
+			}
+		}
+		
+		//dd($arr);
+		$arr = json_encode($arr);
+		
+		$transactions = \DB::table('transactions')->whereNotIn('status', ['Pending'])->whereDate('created_at', '=', date('Y-m-d'))->orderBy('created_at', 'DESC')->limit(30)->get();
+		$transactionCount = \DB::table('transactions')->whereNotIn('status', ['Pending'])->whereDate('created_at', '=', date('Y-m-d'))->count();
+		$transactionsTotal = \DB::table('transactions')->whereNotIn('status', ['Pending'])->whereDate('created_at', '=', date('Y-m-d'))->sum('transactions.total_amount');
+		
+		$taxbreakdownRoad = \DB::table('transaction_breakdown')->where('item_name', '=', 'ROAD TAX')->sum('amount');
+		$taxbreakdownInsurance = \DB::table('transaction_breakdown')->where('item_name', '=', 'INSURANCE TAX')->sum('amount');
+		$taxbreakdownFitness = \DB::table('transaction_breakdown')->where('item_name', '=', 'FITNESS TEST')->sum('amount');
+		
+		//dd($transactionsTotal);
+		
+		return view('admin.dashboard', compact('arr', 'transactions', 'transactionsTotal', 'transactionCount', 'taxbreakdownRoad', 'taxbreakdownInsurance', 'taxbreakdownFitness'));
+	}
+	
+	
+	public function getRemoveInsurance()
+	{
+		$cart = session()->get('cart');
+		$cart = json_decode($cart, true);
+		$new_cart = [];
+		foreach($cart as $key => $val)
+		{
+			if($key!='insuranceProvider' && $key!='insuranceType' && $key!='vehicleType' && $key!='insurancePeriod' && $key!='insurance' && $key!='insuranceamount' && $key!='insurancenotax' && $key!='govtinsurancelevy')
+				$new_cart[$key] = $val;
+		}
+		session()->put('cart', json_encode($new_cart));
+		return \Redirect::back()->with('success', 'Insurance has been removed from your cart');
+	}
+	
+	public function getRemoveFitnessTest()
+	{
+		$cart = session()->get('cart');
+		$cart = json_decode($cart, true);
+		$new_cart = [];
+		foreach($cart as $key => $val)
+		{
+			if($key!='fitnesstest')
+				$new_cart[$key] = $val;
+		}
+		session()->put('cart', json_encode($new_cart));
+		return \Redirect::back()->with('success', 'Fitness Test has been removed from your cart');
+		##3EZK-NN7P-HFZK-XLNQ
+	}
+	
+	
+	public function getInsuranceRoadTaxCheck() 
+	{
+		return view('step-one-check-insurance');
+	}
+	
+	public function postInsuranceRoadTaxCheck(\Illuminate\Http\Request $request) 
+	{
+		session()->remove('cart');
+		$input = $request->all();
+		$mvpn_mvcn = $input['mvpn_mvcn'];
+		$mobile_number = $input['mobile_number'];
+		//dd($input);
+		$getdata = http_build_query(
+			array(
+				'clientCode' => 'PROBASEPAY',
+				'userName' => 'PROBASEPAY',
+				'password'=>'password',
+				'mvnplate'=>$mvpn_mvcn,
+				'gsm'=>$mobile_number,
+				'timestamp' => date('d/m/Y H:i:s'),
+				'source' => 'probase',
+				'sourceID'=>'PB19001',
+				'type'=>'getMVDetails',
+				'country'=>'ZM'
+				
+			)
+		);
+		$url = "http://127.0.0.1:77/api/get-mv-details?".$getdata;
+		//echo $url;
+		//dd($url);
+		try{
+			$response = file_get_contents($url);
+			
+			
+			$str = $response;
+			$response = json_decode($response, true);
+			
+			if($response['reasonCode']==0)
+			{
+			
+				if(!((strpos($mobile_number, '260')==0 && strlen($mobile_number)==12) || (strpos($mobile_number, '+260')==0 && strlen($mobile_number)==13) || (strpos($mobile_number, '0')==0 && strlen($mobile_number)==10)))
+				{
+					return \Redirect::back()->with('error', 'Invalid mobile number provided. Your mobile number is not a valid Zambian mobile number'); 
+				}
+				else
+				{
+					if(strpos($mobile_number, '+260')==0 && strlen($mobile_number)==13)
+					{
+						$mobile_number = substr($mobile_number, 1);
+					}
+					else if(strpos($mobile_number, '0')==0 && strlen($mobile_number)==10)
+					{
+						$mobile_number = '26'.$mobile_number;
+					}
+				}
+				
+				$payee = new \App\Payee();
+				$payee->vehicle_plate_number = $response['mvnplate'];
+				$payee->otp = mt_rand(10000, 99990);
+				$payee->data = $str;
+				$payee->mobile_number = $mobile_number;
+				$payee->trnx_id = strtoupper(join('-', str_split(str_random(16), 4)));
+				$payee->fail_times = 0;
+				$payee->otp_fail = 0;
+				$payee->save();
+				
+				
+				$msg = "Hello,\nYour RTSA OTP for paying your RTSA taxes is ".$payee->otp.".\n Provide this OTP to proceed with your payment";
+				try{
+					$getdata = http_build_query(
+						array(
+							'username' => 'rtsa',
+							'password' => 'password@1',
+							'mobiles'=>$mobile_number,
+							'message'=>$msg,
+							'sender'=>'RTSA',
+							'type' => 'TEXT'					
+						)
+					);
+					
+					$url = "http://smsapi.probasesms.com/apis/text/index.php?".$getdata;
+					
+					$responseSms = file_get_contents($url);
+				}catch(\Exception $e)
+				{
+				
+				}
+				
+				//dd($response);
+				$response['mobile'] = $mobile_number;
+				$response = json_encode($response);
+				
+				return \Redirect::to('/payments/otp/'.\Crypt::encrypt($payee->id));
+			}
+			return \Redirect::back()->with('error', $response['reasonDescription']);
+		}
+		catch(\Exception $e)
+		{
+			dd($e);
+			return \Redirect::back()->with('error', 'Error experienced getting your  motor vehicle details. Please try again');
+		}
+		//return \Redirect::to('/payments/insurance-road-tax-purchase/'.\Crypt::encrypt($payee->id));
+	}
+	
+	public function getOTP($payeeId)
+	{
+		$payee = \App\Payee::where('id', '=', \Crypt::decrypt($payeeId))->first();
+		return view('otp', compact('payeeId', 'payee'));
+	}
+	
+	
+	
+	
+	public function postOTP(\Illuminate\Http\Request $request, $payeeId)
+	{
+		$payee = \App\Payee::where('id', '=', \Crypt::decrypt($payeeId))->first();
+		if($payee==null)
+			return \Redirect::to('/payments/insurance-road-tax-check')->with('error', 'Invalid transaction. You can not proceed with this process');
+		$otp = $request->get('otp');
+		if($payee!=null && $otp==$payee->otp)
+		{
+			return \Redirect::to('/payments/insurance-road-tax-purchase/'.\Crypt::encrypt($payee->id));
+		}
+		else
+		{
+			$payee->otp = null;
+			$payee->otp_fail = $payee->otp_fail + 1;
+			$payee->save();
+			$payee->delete();
+			
+			if($payee->otp_fail==3)
+			{
+				return\Redirect::to('/payments/insurance-road-tax-check')->with('error', 'Invalid OTP provided. You will need to start afresh');
+			}
+			else
+			{
+				return\Redirect::back()->with('error', 'Invalid OTP provided. You can not proceed with this process');
+			}
+		}
+	}
+	
+	
+	
+	public function getInsuranceRoadTaxPurchase($payeeId) 
+	{
+		$payee = \App\Payee::where('id', '=', \Crypt::decrypt($payeeId))->first();
+		$responseData = json_decode($payee->data);
+		//dd($responseData);
+		$insurance_diff = null;
+		$roadTax_diff = null;
+		$fitness_diff = null;
+		$carbonEmission_diff = null;
+		
+		$dataString = $payeeId;
+		//$responseData = (($responseData));
+		//dd($responseData);
+		$mvIssuranceExpiry = $responseData->mvIssuranceExpiry;
+		
+		$today = new DateTime("now");
+		$mvIssuranceExpiry = $mvIssuranceExpiry==null ? null : DateTime::createFromFormat('d/m/Y H:i:s', $mvIssuranceExpiry);//->format('d/m/Y H:i:s');
+		if($mvIssuranceExpiry!=null)
+		{
+			$insurance_diff = $today->diff($mvIssuranceExpiry);
+			$insurance_diff = (intval($insurance_diff->format('%R%a')));
+			//dd($insurance_diff);
+		}
+		
+		
+		$mvRoadTaxExpiry = $responseData->mvRoadTaxExpiry;
+		$mvRoadTaxExpiry = $mvRoadTaxExpiry==null ? null : DateTime::createFromFormat('d/m/Y H:i:s', $mvRoadTaxExpiry);//->format('d/m/Y H:i:s');
+		if($mvRoadTaxExpiry!=null)
+		{
+			$roadTax_diff = $today->diff($mvRoadTaxExpiry);
+			$roadTax_diff = (intval($roadTax_diff->format('%R%a')));
+		}
+		
+		
+		$mvFitnessExpiry = $responseData->mvFitnessExpiry;
+		$mvFitnessExpiry = $mvFitnessExpiry==null ? null : DateTime::createFromFormat('d/m/Y H:i:s', $mvFitnessExpiry);//->format('d/m/Y H:i:s');
+		if($mvFitnessExpiry!=null)
+		{
+			$fitness_diff = $today->diff($mvFitnessExpiry);
+			$fitness_diff = (intval($fitness_diff->format('%R%a')));
+		}
+		
+		
+		/*$mvCarbonEmissionExpiry = $responseData->mvCarbonEmissionExpiry;
+		$mvCarbonEmissionExpiry = $mvCarbonEmissionExpiry==null ? null : DateTime::createFromFormat('d/m/Y H:i:s', $mvCarbonEmissionExpiry);//->format('d/m/Y H:i:s');
+		if($mvCarbonEmissionExpiry!=null)
+		{
+			$carbonEmission_diff = $today->diff($mvCarbonEmissionExpiry);
+			$carbonEmission_diff = (intval($carbonEmission_diff->format('%R%a')));
+		}
+		
+		$mvRoadTaxExpiry = $responseData->mvRoadTaxExpiry;
+		$mvRoadTaxExpiry = DateTime::createFromFormat('d/m/Y H:i:s', $mvRoadTaxExpiry);//->format('d/m/Y H:i:s');
+		$today = new DateTime("now");
+		$roadTax_diff = $today->diff($mvRoadTaxExpiry);
+		$roadTax_diff = (intval($roadTax_diff->format('%R%a')));*/
+		//
+		//date('d-m-Y H:i:s', strtotime($mvIssuranceExpiry));
+		//dd($mvIssuranceExpiry);
+		$renewYes = false;
+		if($insurance_diff==null || ($insurance_diff!=null && $insurance_diff<0)){$renewYes = true;}
+		if($roadTax_diff==null || ($roadTax_diff!=null && $roadTax_diff<0)){$renewYes = true;}
+		//if($carbonEmission_diff==null || ($carbonEmission_diff!=null && $carbonEmission_diff>0)){$renewYes = true;}
+		if($fitness_diff==null || ($fitness_diff!=null && $fitness_diff<0)){$renewYes = true;}
+		//dd($renewYes);
+		
+		
+		return view('step-two-purchase-road-tax', compact('payee', 'dataString', 'carbonEmission_diff', 'mvCarbonEmissionExpiry', 'insurance_diff', 'mvIssuranceExpiry', 'roadTax_diff', 'mvRoadTaxExpiry', 'fitness_diff', 'mvFitnessExpiry', 'renewYes'));
+		
+	}
+	
+	
+	public function getPurchaseInsuranceTax($payeeId) {
+		$payee = \App\Payee::where('id', '=', \Crypt::decrypt($payeeId))->first();
+		$responseData = json_decode($payee->data);
+		$fitnessTestCost = FITNESS_TEST_COST;
+		$dataString = $payeeId;
+		
+		$insuranceProviders = \App\InsuranceProvider::where('status', '=', 1)->get();
+		$vehicleTypes  = \App\VehicleType::where('status', '=', 1)->get();
+		$insurancePeriods = \App\InsurancePeriod::all();
+		$cart = json_decode(session()->get('cart'));
+		$step = 'Four';
+		
+			
+		$mvIssuranceExpiry = isset($responseData->mvIssuranceExpiry) ? $responseData->mvIssuranceExpiry : null;
+		$mvFitnessExpiry = isset($responseData->mvFitnessExpiry) ? $responseData->mvFitnessExpiry : null;
+		//dd($mvIssuranceExpiry);
+		
+		$mvIssuranceExpiry1 = DateTime::createFromFormat('d/m/Y H:i:s', $mvIssuranceExpiry);//->format('d/m/Y H:i:s');
+		$today = new DateTime("now");
+		$insurance_diff = $today->diff($mvIssuranceExpiry1);
+		$insurance_diff = (intval($insurance_diff->format('%R%a')));
+		
+		$mvFitnessExpiryDate = DateTime::createFromFormat('d/m/Y H:i:s', $mvFitnessExpiry);//->format('d/m/Y H:i:s');
+		$fitness_diff = $today->diff($mvFitnessExpiryDate);
+		$fitness_diff = (intval($fitness_diff->format('%R%a')));
+		
+		
+		if($insurance_diff>0 && $fitness_diff>0)
+		{
+			return \Redirect::to('/payments/purchase-other-taxes/'.$dataString);
+		}
+		return view('step-three-purchase-road-tax', compact('insurancePeriods', 'step', 'fitnessTestCost',  'fitness_diff', 'mvFitnessExpiry', 'mvFitnessExpiryDate', 'responseData', 'vehicleTypes', 'insuranceProviders', 'dataString', 'mvIssuranceExpiry', 'cart'));
+	}
+	
+	
+	
+	public function getInsurancePrice($insuranceProvider, $insuranceType, $vehicleType, $insurancePeriod) {
+		$insurancePrice = \App\InsurancePackage::where('insurance_provider_id', '=', $insuranceProvider)
+			->where('insurance_type', '=', $insuranceType)
+			->where('vehicle_type', '=', $vehicleType)
+			->where('quarters', '=', $insurancePeriod)->first();
+		if($insurancePrice==null)
+			return response()->json(['status' => 0, 'errorMsg'=>'<h6 style="color:red !important">Invalid Insurance Provider, Insurance Type, Vehicle Type & Period Selected</h6>']);
+		else
+			return response()->json(['status' => 1, 'price'=>'<h3>ZMW'.number_format($insurancePrice->valuation, 2, '.', ',').'</h3>']);
+	}	
+	
+	
+	public function postPurchaseInsuranceTax(\Illuminate\Http\Request $request, $payeeId) {
+		$payee = \App\Payee::where('id', '=', \Crypt::decrypt($payeeId))->first();
+		$responseData = json_decode($payee->data);
+		$all = $request->all();
+		//dd($all['addInsuranceTaxButton']);
+		$cart = session()->get('cart');
+		$cart = json_decode($cart, true);
+		
+		if(isset($all['addInsuranceTaxButton']))
+		{
+			$cart['insuranceProvider'] = $request->get('insuranceProvider');
+			$cart['insuranceType'] = $request->get('insuranceType');
+			$cart['vehicleType'] = $request->get('vehicleType');
+			$cart['insurancePeriod'] = $request->get('insurancePeriod');
+			
+			$insurancePrice = \App\InsurancePackage::where('insurance_provider_id', '=', explode('|||', $request->get('insuranceProvider'))[0])
+				->where('insurance_type', '=', $request->get('insuranceType'))
+				->where('vehicle_type', '=', explode('|||', $request->get('vehicleType'))[1])
+				->where('quarters', '=', explode('|||', $request->get('insurancePeriod'))[1])->first()->toArray();
+			if($insurancePrice==null)
+				return \Redirect::back()->with('error', 'Invalid Insurance Provider, Insurance Type, Vehicle Type & Period Selected');
+			
+			
+			$cart['insurance'] = $insurancePrice;
+			$cart['insuranceamount'] = $insurancePrice['valuation'];
+			$cart['insurancenotax'] = $insurancePrice['valuation_no_tax'];
+			$cart['govtinsurancelevy'] = ($insurancePrice['valuation'] * 3)/100;
+			session()->put('cart', json_encode($cart));
+			return \Redirect::back()->with('success', 'Insurance added to your shopping cart');
+		}
+		else if(isset($all['addFitnessButton']))
+		{
+			$cart['fitnesstest'] = $request->get('fitnesstest');
+			session()->put('cart', json_encode($cart));
+			return \Redirect::back()->with('success', 'Fitness Test added to your shopping cart');
+		}
+		else if(isset($all['nextButtonAction']))
+		{
+			return \Redirect::to('/payments/purchase-other-taxes/'.$payeeId);
+		}
+	}
+	
+	
+	public function getPurchaseOtherTaxes($payeeId) {
+		$payee = \App\Payee::where('id', '=', \Crypt::decrypt($payeeId))->first();
+		$responseData = json_decode($payee->data);
+		$fitnessTestCost = FITNESS_TEST_COST;
+		$dataString = $payeeId;
+		//dd(\Crypt::decrypt($responseData));
+		//$responseData = json_decode(\Crypt::decrypt($responseData));
+		$insurancePackages = \App\InsurancePackage::where('status', '=', 1)->get();
+		$carbonSurtaxes = \App\CarbonEmission::where('status', '=', 1)->get();
+		$roadTaxes = \DB::table('road_tax_index')->join('vehicle_categories', 'road_tax_index.mv_category_id', '=', 'vehicle_categories.id')
+			->select('road_tax_index.*', 'vehicle_categories.*', 'road_tax_index.id as id')->get();
+			
+		//dd($responseData);
+		$mvRoadTaxExpiry = isset($responseData->mvRoadTaxExpiry) ? $responseData->mvRoadTaxExpiry : null;
+		$mvIssuranceExpiry = isset($responseData->mvIssuranceExpiry) ? $responseData->mvIssuranceExpiry : null;
+		$mvFitnessExpiry = isset($responseData->mvFitnessExpiry) ? $responseData->mvFitnessExpiry : null;
+		$mvCarbonTaxExpiry = isset($responseData->mvCarbonTaxExpiry) ? $responseData->mvCarbonTaxExpiry : null;
+		$mvCategoryCode = isset($responseData->mvCategoryCode) ? $responseData->mvCategoryCode : null;
+		
+		
+		$mvRoadTaxExpiryDate = DateTime::createFromFormat('d/m/Y H:i:s', $mvRoadTaxExpiry);//->format('d/m/Y H:i:s');
+		$today = new DateTime("now");
+		$roadTax_diff = $today->diff($mvRoadTaxExpiryDate);
+		$roadTax_diff = (intval($roadTax_diff->format('%R%a')));
+		
+		
+		$mvFitnessExpiryDate = DateTime::createFromFormat('d/m/Y H:i:s', $mvFitnessExpiry);//->format('d/m/Y H:i:s');
+		$today = new DateTime("now");
+		$fitness_diff = $today->diff($mvFitnessExpiryDate);
+		$fitness_diff = (intval($fitness_diff->format('%R%a')));
+		
+		$cart = \Session::get('cart');
+		$cart = json_decode($cart);
+		//dd($cart);
+		
+		$mvRoadTaxAmount = $responseData->mvRoadTaxCharge;
+		$mvCategory = $responseData->mvCategory;
+		$mvCategoryCode = $responseData->mvCategoryCode;
+		$mvCarbonEmissionCharge = $responseData->mvCarbonEmissionCharge;
+		//dd($mvRoadTaxAmount);
+		$mvEngineCode = $responseData->mvEngineCode;
+		
+		$mvIssuranceExpiry = isset($responseData->mvIssuranceExpiry) ? $responseData->mvIssuranceExpiry : null;
+		$mvIssuranceExpiry1 = DateTime::createFromFormat('d/m/Y H:i:s', $mvIssuranceExpiry);//->format('d/m/Y H:i:s');
+		$today = new DateTime("now");
+		$insurance_diff = $today->diff($mvIssuranceExpiry1);
+		$insurance_diff = (intval($insurance_diff->format('%R%a')));
+		$step = 'Five';
+		if($insurance_diff>0)
+		{
+			$step = 'Four';
+		}
+		return view('step-four-purchase-road-tax', compact('step', 'mvCategory', 'mvCategoryCode', 'mvEngineCode', 'mvCarbonEmissionCharge', 'mvRoadTaxAmount', 'cart', 'roadTax_diff', 'fitness_diff', 'responseData', 'insurancePackages', 'dataString', 'carbonSurtaxes', 'roadTaxes', 'fitnessTestCost', 'mvRoadTaxExpiry', 'mvIssuranceExpiry', 'mvFitnessExpiry', 'mvCarbonTaxExpiry'));
+	}
+	
+	
+	public function getTaxBreakDown($payeeId) {
+		
+		$payee = \App\Payee::where('id', '=', \Crypt::decrypt($payeeId))->first();
+		$responseData = json_decode($payee->data);
+		//$responseData = (\Crypt::decrypt($responseData));
+		if(is_string($responseData))
+			$responseData = json_decode($responseData);
+			
+		return view('view-tax-breakdown', compact('responseData'));
+	}
+	
+	
+	public function getInsuranceBreakDown() {
+		
+		$cart = session()->get('cart');
+		$cart = json_decode($cart, true);
+			
+		return view('view-insurance-breakdown', compact('cart'));
+	}
+	
+	
+	public function postPurchaseOtherTaxes(\Illuminate\Http\Request $request, $payeeId) {
+		$all = $request->all();
+		//dd($all);
+		$dataString = $payeeId;
+		$cart = session()->get('cart');
+		$cart = json_decode($cart, true);
+		if(isset($all['addtocartroadtax']))
+		{
+			$cart['roadtax'] = $request->get('roadtax');
+			$cart['roadtaxCategoryCode'] = $request->get('roadtaxCategoryCode');
+			$cart['engineCode'] = $request->get('engineCode');
+			session()->put('cart', json_encode($cart));
+			//$responseData = json_decode(\Crypt::decrypt($responseData));
+			return \Redirect::back()->with('success', 'Road Tax added to your shopping cart');
+		}
+		/*else if(isset($all['addCarbonTaxButton']))
+		{
+			$cart['carbontax'] = $request->get('carbontax');
+		}*/
+		else if(isset($all['nextButtonAction']))
+		{
+			return \Redirect::to('/payments/review-purchase/'.$dataString);
+		}
+		
+		
+		//dd($cart);
+	}
+	
+	
+	public function getReviewPurchase($payeeId) {
+		$payee = \App\Payee::where('id', '=', \Crypt::decrypt($payeeId))->first();
+		$responseData = json_decode($payee->data);
+	
+		$cart = session()->get('cart');
+		if($cart==null || ($cart!=null && sizeof($cart)==0))
+		{
+			return \Redirect::back();
+		}
+		$cart = json_decode($cart, true);
+		$dataString = $payeeId;
+		//$responseData = json_decode(\Crypt::decrypt($responseData));
+		$responseDataArr = json_decode($payee->data, true);
+		
+		//print_r($cart);
+		
+		
+		$roadTax = null;
+		$carbontax = null;
+		$fitnesstest = null;
+		$insurance = null;
+		$total = 0;
+		$insuranceAmount = 0;
+		
+		if(isset($cart['roadtax']) && $cart['roadtax']!=null)
+		{
+			/**/
+			//dd($cart);
+			$roadTax =\DB::table('road_tax_index')->join('vehicle_categories', 'road_tax_index.mv_category_id', '=', 'vehicle_categories.id')
+				->where('vehicle_categories.category_code', '=', $cart['roadtaxCategoryCode'])
+				->where('road_tax_index.quarters', '=', $responseData->mvQuarter)
+				->select('road_tax_index.*', 'vehicle_categories.*', 'road_tax_index.id as id')->first();
+			//$total = $total + $roadTax->amount;
+			$responseDataArr['roadtax'] = $roadTax->amount;
+			$ces = \DB::table('carbon_emission_surtaxes')->where('carbon_emission_surtaxes.engine_code', '=', $cart['engineCode'])->first();
+			
+//Road Tax Fee	ZM1,695.00
+//Fitness Fee	ZM50.00
+//Insurance Fee	ZM450.00
+//Total			ZM2,195.00
+			
+			$roadTax = $roadTax->amount + $ces->annual_amount;
+			$total = $total + $roadTax;
+			$responseDataArr['roadtax'] = $roadTax;
+			//dd($responseDataArr);
+			//$responseDataArr['roadtaxCategoryCode'] = $request->get('roadtaxCategoryCode');
+			//$responseDataArr['engineCode'] = $request->get('engineCode');
+			//$responseDataArr['mvQuarter'] = $responseData->mvQuarter;
+		}
+		/*if(isset($cart['carbontax']) && $cart['carbontax']!=null)
+		{
+			$carbontax =\DB::table('carbon_emission_surtaxes')->where('id', '=', $cart['carbontax'])->first();
+			$total = $total + $carbontax->annual_amount;
+			$responseDataArr['carbontax'] = $carbontax->annual_amount;
+		}*/
+		//dd(22);
+		//dd($responseData);
+		if(isset($cart['fitnesstest']) && $cart['fitnesstest']!=null)
+		{
+			$fitnesstest = $cart['fitnesstest'];
+			$total = $total + $fitnesstest;
+			$responseDataArr['fitnesstest'] = $fitnesstest;
+		}
+		if(isset($cart['insurance']) && $cart['insurance']!=null && isset($cart['insuranceamount']) && $cart['insuranceamount']!=null)
+		{
+			//dd($cart);
+			$insurance =\DB::table('insurance_packages')->where('id', '=', $cart['insurance']['id'])->first();
+			$total = $total + $cart['insuranceamount'] + ($cart['insuranceamount']*0.03);
+			$responseDataArr['insurance'] = $cart['insuranceamount'];
+			$responseDataArr['insurer'] = $cart['insurance'];
+			$responseDataArr['insurance_govt_levy'] = $cart['insuranceamount']*0.03;
+			$responseDataArr['insurance_vat'] = $cart['insurance']['valuation'] - $cart['insurance']['valuation_no_tax'];
+			$responseDataArr['insurance_period'] = $cart['insurance']['quarters'];
+			$insuranceAmount = $cart['insuranceamount'];
+		}
+		
+		$mvIssuranceExpiry = isset($responseData->mvIssuranceExpiry) ? $responseData->mvIssuranceExpiry : null;
+		$mvIssuranceExpiry1 = DateTime::createFromFormat('d/m/Y H:i:s', $mvIssuranceExpiry);//->format('d/m/Y H:i:s');
+		$today = new DateTime("now");
+		$insurance_diff = $today->diff($mvIssuranceExpiry1);
+		$insurance_diff = (intval($insurance_diff->format('%R%a')));
+		
+		$convenienceFee = CONVENIENCE_FEE;
+		$grandTotal = $total + $convenienceFee;
+		//dd($responseDataArr);
+		$responseDataArr['convenienceFee'] = CONVENIENCE_FEE;
+		$responseData = json_encode($responseDataArr);
+		//dd($responseData);
+		//$responseData->convenienceFee = CONVENIENCE_FEE;
+		
+		$dataString = $responseData;
+		$dataString = \Crypt::encrypt($dataString);
+		$orderId = $payee->trnx_id;
+		
+		
+		$step = 'Six';
+		if($insurance_diff>0)
+		{
+			$step = 'Five';
+		}
+		$responseDataObj = json_decode($responseData);
+		$insurancePackages = \App\InsurancePackage::where('status', '=', 1)->get();
+		return view('step-five-review-purchase', compact('insurancePackages', 'step', 'responseData', 'responseDataObj', 'orderId', 'dataString', 'insuranceAmount', 'payeeId', 'responseDataArr', 'cart', 'roadTax', 'carbontax', 'fitnesstest', 'insurance', 'total', 'convenienceFee', 'grandTotal'));
+	}
+	
+	
+	
+	
+	
+	public function removeCartItem($item)
+	{
+		$cart = session()->get('cart');
+		if($cart==null || ($cart!=null && sizeof($cart)==0))
+		{
+			return \Redirect::back();
+		}
+		$cart = json_decode($cart, true);
+		$arr = [];
+		foreach($cart as $key => $val)
+		{
+			//if($item=='insurance' && ($key!='insurance' && $key!='insuranceamount'))
+			//	$arr[$key] = $val;
+			//if($item=='fitness' && ($key!='fitnesstest'))
+			//	$arr[$key] = $val;
+			if($item=='road-tax' && ($key!='roadtax' && $key!='roadtaxCategoryCode' && $key!='engineCode'))
+				$arr[$key] = $val;
+		}
+		
+		if(sizeof($arr)>0)
+		{
+			session()->put('cart', json_encode($arr));
+			return \Redirect::back()->with('success', 'Item removed successfully from your cart');
+		}
+		return \Redirect::to('/payments/insurance-road-tax-check')->with('success', 'All Items removed successfully from your cart');
+		
+		
+	}
+	
+	
+	public function postReviewPurchase(\Illuminate\Http\Request $request, $payeeId) {
+		
+		$all = $request->all();
+		//dd($all);
+		if(isset($all['updateInsurance']) && $all['updateInsurance']=='Save')
+		{
+			$cart = session()->get('cart');
+			$cart = json_decode($cart, true);
+			
+			if(isset($all['editinsurance']) && $all['editinsurance']!=-1 && isset($all['editinsuranceAmount']) && $all['editinsuranceAmount']>0)
+			{
+				$cart['insurance'] = $request->get('editinsurance');
+				$insurancePackage = \App\InsurancePackage::where('id', '=', $request->get('editinsurance'))->first();
+				$cart['insuranceamount'] = $request->get('editinsuranceAmount') * $insurancePackage->valuation/100;
+				session()->put('cart', json_encode($cart));
+				return \Redirect::back()->with('success', 'Insurance updated in your shopping cart');
+			}
+			return \Redirect::back()->with('error', 'Select an insurance package and provide the insurance amount');
+		}
+		
+		
+		$payee = \App\Payee::where('id', '=', \Crypt::decrypt($payeeId))->first();
+		$responseDataFromPayee = json_decode($payee->data);
+		//dd($payee);
+		
+		$all = $request->all();
+		$data = $all['data'];
+		$orderId = $all['orderId'];
+		$x = 0;
+		
+		$responseData = json_decode(\Crypt::decrypt($data));
+		//dd($payee);
+		
+		
+		
+		
+		$scope = "";
+		$params = array();
+		$params1 = array();
+		$params['merchantId'] = MERCHANT_ID;
+		$params['deviceCode'] = DEVICE_CODE;
+		$params['serviceTypeId'] = SERVICE_TYPE;
+		$params['orderId'] = $orderId;
+		$params['payerName'] = $responseData->mvnplate;
+		$params['payerEmail'] = DEFAULT_PAYEE_EMAIL;
+		$params['payerPhone'] = $payee->mobile_number;
+		$params['payerId'] = $responseData->tpin;
+		$params['nationalId'] = $responseData->tpin;
+
+		if(isset($responseData->roadtax) && $responseData->roadtax!=null)
+		{
+			$params['paymentItem'][$x] = "Road Tax Fee";
+			$params['amount'][$x++] = (number_format($responseData->roadtax, 2, '.', ''));
+			$scope = $scope."ROAD TAX|";
+			$params1['ROAD TAX'] = (number_format($responseData->roadtax, 2, '.', ''));
+		}
+		if(isset($responseData->carbontax) && $responseData->carbontax!=null)
+		{
+			$params['paymentItem'][$x] = "Carbon Tax Fee";
+			$params['amount'][$x++] = (number_format($responseData->carbontax, 2, '.', ''));
+			$scope = $scope."CARBON EMISSION TAX|";
+			$params1['CARBON EMISSION'] = (number_format($responseData->carbontax, 2, '.', ''));
+		}
+		if(isset($responseData->fitnesstest) && $responseData->fitnesstest!=null)
+		{
+			$params['paymentItem'][$x] = "Fitness Fee";
+			$params['amount'][$x++] = (number_format($responseData->fitnesstest, 2, '.', ''));
+			$scope = $scope."FITNESS TEST|";
+			$params1['FITNESS TEST'] = (number_format($responseData->fitnesstest, 2, '.', ''));
+		}
+		if(isset($responseData->insurance) && $responseData->insurance!=null)
+		{
+			$params['paymentItem'][$x] = "Insurance Fee";
+			$params['amount'][$x++] = (number_format($responseData->insurance, 2, '.', ''));
+			$scope = $scope."INSURANCE TAX|";
+			$params1['INSURANCE TAX'] = (number_format($responseData->insurance, 2, '.', ''));
+			$params1['INSURANCE GOVT LEVY'] = (number_format($responseData->insurance_govt_levy, 2, '.', ''));
+			$params1['INSURANCE VAT'] = $responseData->insurance_vat;
+			$params1['INSURANCE PERIOD'] = $responseData->insurance_period;
+		}
+		if(isset($responseData->convenienceFee) && $responseData->convenienceFee!=null)
+		{
+			$params['paymentItem'][$x] = "Processing Fee";
+			$params['amount'][$x++] = (number_format($responseData->convenienceFee, 2, '.', ''));
+		}
+		//dd($responseData);
+		
+		
+		//dd($params);
+
+
+		$totalAmount = 0;
+		for($i1 = 0; $i1<sizeof($params['amount']); $i1++) {
+			$totalAmount = $totalAmount + floatval($params['amount'][$i1]);
+		}
+		$totalAmount = (number_format($totalAmount, 2, '.', ''));
+
+		$params['responseurl'] = 'http://'.DEFAULT_DOMAIN.'/payments/route-success';
+		$params['scope'] = $scope;
+		$params['description'] = $scope;
+
+
+		$toHash = $params['merchantId'].$params['deviceCode'].$params['serviceTypeId'].
+				$params['orderId'].$totalAmount.$params['responseurl'].PAYMENT_API_KEY;
+
+
+		$hash = hash('sha512', $toHash);
+		$params['hash'] = $hash;
+		$params['currency'] = DEFAULT_CURRENCY;
+		
+		
+		$params1 = $params + $params1;
+		
+		
+		
+		
+		
+		$transaction = new \App\Transaction();
+		$transaction->transaction_ref = $payee->trnx_id;
+		$transaction->payment_type = 'CARD';
+		$transaction->paid_by_vendor_id = null;
+		$transaction->paid_by_vendor_name = null;
+		$transaction->bank_id = null;
+		$transaction->bank_name = null;
+		$transaction->paid_by_user_id = \Auth::user() ? \Auth::user()->id : null;
+		$transaction->paid_by_user_name = $responseData->mvOwner;
+		$transaction->total_amount = $totalAmount;
+		$transaction->bank_ref_no = null;
+		$transaction->bank_code = null;
+		$transaction->mvpn = $responseData->mvnplate;
+		$transaction->mvcn = $responseData->mvChassis;
+		$transaction->transaction_details = json_encode($responseData);
+		$transaction->transaction_request_details = json_encode($params1);
+		$transaction->transaction_response_details = null;
+		$transaction->status = 'Pending';
+		$transaction->mobile_number = $payee->mobile_number;
+		$transaction->tpin = $responseData->tpin;
+		$transaction->save();
+		
+		$data = (json_decode(json_encode($responseData), TRUE) + $payee->toArray());
+		
+		$payee->data = json_encode($data);
+		$payee->save();
+		$params['merchant_defined_data1'] = \Crypt::encrypt($payee->id);
+		$params['scope'] = \Crypt::encrypt($payee->id);
+		
+		
+		return view('probasepay', compact('data', 'params'));
+	}
+	
+	
+	public function getRouteSuccess(\Illuminate\Http\Request $request){
+		//dd($request->all());
+		$this->postRouteSuccess($request);
+		//return \Redirect::to('/');
+	}
+	
+	
+	public function postRouteSuccess(\Illuminate\Http\Request $request){
+		//dd($request->all());
+		$status = $request->get('status');
+		if($status=='00' || $status==0)
+		{
+			$transaction = \App\Transaction::where('transaction_ref', '=', $request->get('orderId'))->first();
+			if($transaction!=null)
+			{
+				$responseData = json_decode($transaction->transaction_details);
+				$transaction_request_details = json_decode($transaction->transaction_request_details, true);
+				//dd($transaction_request_details);
+				
+				
+				$transaction->bank_ref_no = $request->get('orderId');
+				$transaction->status = 'Approved';
+				$transaction->save();
+				
+				$payee = \App\Payee::where('trnx_id', '=', $request->get('orderId'))->first();
+				$payeeData = json_decode($payee->data);
+				$mvQuarter = $payeeData->mvQuarter;
+				$mvCategoryCode = $payeeData->mvCategoryCode;
+				
+				$arr = array('CARBON EMISSION', 'ROAD TAX', 'FITNESS TEST', 'INSURANCE TAX');
+				
+				foreach($arr as $key)
+				{
+					if(isset($transaction_request_details[$key]))
+					{
+						$transactionBreakdown = new \App\TransactionBreakDown();
+						$transactionBreakdown->transaction_id = $transaction->id;
+						$transactionBreakdown->item_name = $key;
+						$transactionBreakdown->item_details = $key;
+						$transactionBreakdown->amount = $transaction_request_details[$key];
+						$transactionBreakdown->item_component = $key;
+						$transactionBreakdown->save();
+					}
+				}
+				
+				
+				$getdata = http_build_query(
+					array(
+						'clientCode' => 'PROBASEPAY',
+						'userName' => 'PROBASEPAY',
+						'password'=>'password',
+						'source' => 'probase',
+						'sourceID'=>'PB19001',
+						'type'=>'sendPaymentConfirmation',
+						'country'=>'ZM',
+						'mvnplate'=>$transaction->mvpn,
+						'mvOwner'=>$transaction->paid_by_user_name,
+						'tpin'=>$transaction->tpin,
+						'mvRoadTaxAmount'=>((isset($transaction_request_details['ROAD TAX']) ? $transaction_request_details['ROAD TAX'] : 0) - (isset($payeeData->mvCarbonEmissionCharge) ? $payeeData->mvCarbonEmissionCharge : 0)),
+						'mvCETAmount'=>isset($payeeData->mvCarbonEmissionCharge) ? $payeeData->mvCarbonEmissionCharge : 0,
+						'mvIssuranceAmount'=>isset($transaction_request_details['INSURANCE TAX']) ? $transaction_request_details['INSURANCE TAX'] : 0,
+						'mvIssurancePeriod'=>isset($transaction_request_details['INSURANCE PERIOD']) ? $transaction_request_details['INSURANCE PERIOD'] : 0,
+						'mvFitnessAmount'=>isset($transaction_request_details['FITNESS TEST']) ? $transaction_request_details['FITNESS TEST'] : 0,
+						'mvTotalAmount'=>((isset($transaction_request_details['ROAD TAX']) ? $transaction_request_details['ROAD TAX'] : 0) + 
+							(isset($transaction_request_details['INSURANCE TAX']) ? $transaction_request_details['INSURANCE TAX'] : 0) + 
+							(isset($transaction_request_details['FITNESS TEST']) ? $transaction_request_details['FITNESS TEST'] : 0) + 
+							(isset($transaction_request_details['CARBON EMISSION']) ? $transaction_request_details['CARBON EMISSION'] : 0)),
+						'bankPaymentReference'=>$transaction->bank_ref_no,
+						'bankCode'=>DEFAULT_BANK_CODE,
+						'mvQuarter'=>$mvQuarter,
+						'mvCategoryCode'=>$mvCategoryCode
+						
+					)
+				);
+				
+				//dd($getdata);
+				$url = "http://127.0.0.1:77/api/send-payment-confirmation?".$getdata;
+				echo $url;
+				$response = file_get_contents($url);
+				//dd($response);
+				$response = json_decode($response, true);
+				//dd($response);
+				if($response['reasonCode']==0)
+				{
+					$msg = "Hello,\nYour RTSA transaction was successful. Kindly go to any RTSA office close by with the following reference code - ".$request->get('orderId');
+					try{
+						$getdata = http_build_query(
+							array(
+								'username' => 'rtsa',
+								'password' => 'password@1',
+								'mobiles'=> $payeeData->mobile_number,
+								'message'=>$msg,
+								'sender'=>'RTSA',
+								'type' => 'TEXT'					
+							)
+						);
+						
+						$url = "http://smsapi.probasesms.com/apis/text/index.php?".$getdata;
+						
+						$responseSms = file_get_contents($url);
+					}catch(\Exception $e)
+					{
+					
+					}
+					//dd('/payments/display-receipt/'.$request->get('orderId'));
+					session()->remove('cart');
+					return \Redirect::to('/payments/display-receipt/'.$request->get('orderId'))->with('success', 'Transaction #'.$transaction->transaction_ref.'/'.$transaction->bank_ref_no.' was successful. 
+						Kindly report to any of the nearest branch offices to print a disc. Ensure you go with the mobile number you provided when making your payment');
+				}
+				else
+				{
+					return \Redirect::to('/payments/review-purchase/'.\Crypt::encode(json_encode($responseData)))->with('error', 'Transaction #'.$transaction->transaction_ref.'/'.$transaction->bank_ref_no.' was not successful. 
+						Please try again');
+				}
+			}
+			else
+			{
+				//dd(22);
+				session()->remove('cart');
+				return \Redirect::to('/payments/insurance-road-tax-check')->with('error', 'Invalid Transaction. Transaction matching transaction code #'.$request->get('orderId').' could not be found. If your card has been debited, kindly contact our support team using the chat tool' );
+			}
+		}
+		//dd(33);
+		session()->remove('cart');
+		return \Redirect::to('/payments/insurance-road-tax-check')->with('error', $request->get('statusmessage') );
+		
+	}
+	
+	
+	public function getReceipt(\Illuminate\Http\Request $request, $orderId)
+	{
+		$payee = \App\Payee::where('trnx_id', '=', $orderId)->first();
+		$payeeData = json_decode($payee->data,TRUE);
+		//dd($payeeData);
+		$transaction = \App\Transaction::where('transaction_ref', '=', $orderId)->first();
+		$transaction_request_details = json_decode($transaction->transaction_request_details, true);
+		$total = 0;
+		$convenienceFee = 0;
+		$grandTotal = 0;
+		
+		array('CARBON EMISSION', 'ROAD TAX', 'FITNESS TEST', 'INSURANCE TAX');
+		$insuranceAmount = isset($transaction_request_details['INSURANCE TAX']) ? $transaction_request_details['INSURANCE TAX'] : null;
+		$roadTax = isset($transaction_request_details['ROAD TAX']) ? $transaction_request_details['ROAD TAX'] : null;
+		$fitnesstest = isset($transaction_request_details['FITNESS TEST']) ? $transaction_request_details['FITNESS TEST'] : null;
+		return view('step-six-receipt', compact('transaction_request_details', 'insuranceAmount', 'roadTax', 'fitnesstest', 'payee', 'payeeData', 'transaction', 'grandTotal', 'total', 'convenienceFee'));
+	}
+	
+	
+	public function getTransactionList(){
+		$listing = \App\Transaction::all();
+		$header=  'All Transactions/Payments';
+		$title=  'Transactions/Payments';
+		$detail = 'List of all payments made on the platform';
+		$type = "Payments";
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>'All Transactions', 'url'=>null, 'active'=>1]];
+		
+		return view('admin.listings', compact('type', 'listing', 'detail', 'title', 'header', 'breadcrumbs'));
+	}
+	
+	
+	public function getCertificateList(){
+		$listing = \App\Certificate::all();
+		$header=  'All Certificates';
+		$title=  'Certificates';
+		$detail = 'List of all certificates generated on the platform';
+		$type = "Certificates";
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>'All Certificates', 'url'=>null, 'active'=>1]];
+		
+		return view('admin.listings', compact('type', 'listing', 'detail', 'title', 'header', 'breadcrumbs'));
+	}
+	
+	
+	public function getListVehicleCategories(){
+		$listing = \App\VehicleCategory::all();
+		$header=  'All Vehicle Categories';
+		$title=  'Vehicle Categories';
+		$detail = 'List of all vehicle categories on the platform';
+		$type = "Vehicle Category";
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>'All Vehicle Categories', 'url'=>null, 'active'=>1]];
+		
+		return view('admin.listings', compact('type', 'listing', 'detail', 'title', 'header', 'breadcrumbs'));
+	}
+	
+	
+	public function getNewVehicleCategory($id=NULL){
+		
+		$vehicleCategory = null;
+		if($id!=null)
+		{
+			$id = \Crypt::decrypt($id);
+			$vehicleCategory = \App\VehicleCategory::where('id', '=', $id)->first();
+			if($vehicleCategory==null)
+				return \Redirect::back()->with('error', 'Vehicle Category not found');
+		}
+		
+		$header=  $vehicleCategory==null ? 'New Vehicle Category' : 'Update Vehicle Category';
+		$title=  $vehicleCategory==null ? 'New Vehicle Category' : 'Update Vehicle Category';
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>$vehicleCategory==null ? 'New Vehicle Category' : 'Update Vehicle Category', 'url'=>null, 'active'=>1]];
+		
+		return view('admin.new-vehicle-category', compact('vehicleCategory', 'id', 'title', 'header', 'breadcrumbs'));
+	}
+	
+	
+	public function postNewVehicleCategory(\Illuminate\Http\Request $request){
+		
+		$all = $request->all();
+		$vehicleCategoryId = isset($all['vehicleCategory']) ? $all['vehicleCategory'] : null;
+		$category_name = $all['category_name'];
+		$vehicleCategory = new \App\VehicleCategory();
+		if($vehicleCategoryId!=null)
+		{
+			$vehicleCategory = \App\VehicleCategory::where('id', '=', $vehicleCategoryId)->first();
+			if($vehicleCategory==null)
+				return \Redirect::back()->with('error', 'Vehicle Category not found. Update failed');
+			
+		}
+		
+		$vehicleCategory->mv_category_name = $category_name;
+		$vehicleCategory->save();
+		
+		if($vehicleCategoryId!=null)
+			return \Redirect::to('/taxes/list-vehicle-categories')->with('success', 'Vehicle category edited successfully');
+		else
+			return \Redirect::to('/taxes/list-vehicle-categories')->with('success', 'New Vehicle category saved successfully');
+	}
+	
+	
+	public function getDeleteVehicleCategory($id){
+		$id = \Crypt::decrypt($id);
+		$vehicleCategory = \App\VehicleCategory::where('id', '=', $id)->first();
+		$vehicleCategory->delete();
+		return \Redirect::back()->with('success', 'Vehicle category deleted successfully');
+		
+	}
+	
+	
+	public function getListRoadTaxes(){
+		$listing = \DB::table('road_tax_index')->join('vehicle_categories', 'road_tax_index.mv_category_id', '=', 'vehicle_categories.id')
+			->whereNull('road_tax_index.deleted_at')->whereNull('vehicle_categories.deleted_at')->select('road_tax_index.*', 'vehicle_categories.*', 'road_tax_index.id as id')->get();
+		$header=  'All Motor Vehicle Taxes';
+		$title=  'Motor Vehicle Taxes';
+		$detail = 'List of all motor vehicle taxes on the platform';
+		$type = "Road Tax";
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>'All Motor Vehicle Taxes', 'url'=>null, 'active'=>1]];
+		
+		return view('admin.listings', compact('type', 'listing', 'detail', 'title', 'header', 'breadcrumbs'));
+	}
+	
+	
+	public function getNewRoadTax($id=NULL){
+		
+		$roadTax = null;
+		if($id!=null)
+		{
+			$id = \Crypt::decrypt($id);
+			$roadTax = \App\RoadTax::where('id', '=', $id)->first();
+			if($roadTax==null)
+				return \Redirect::back()->with('error', 'Road Tax not found');
+		}
+		$vehicleCategories = \App\VehicleCategory::all();
+		$header=  $roadTax==null ? 'New Road Tax' : 'Update Road Tax';
+		$title=  $roadTax==null ? 'New Road Tax' : 'Update Road Tax';
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>$roadTax==null ? 'New Road Tax' : 'Update Road Tax', 'url'=>null, 'active'=>1]];
+		
+		return view('admin.new-road-tax', compact('vehicleCategories', 'roadTax', 'id', 'title', 'header', 'breadcrumbs'));
+	}
+	
+	
+	public function postNewRoadTax(\Illuminate\Http\Request $request){
+		
+		$all = $request->all();
+		$roadTaxId = isset($all['roadTax']) ? $all['roadTax'] : null;
+		$category = isset($all['category']) ? $all['category'] : null;
+		$quarters = isset($all['quarters']) ? $all['quarters'] : null;
+		$amount = $all['amount'];
+		$roadTax = new \App\RoadTax();
+		if($roadTaxId!=null)
+		{
+			$roadTax = \App\RoadTax::where('id', '=', $roadTaxId)->first();
+			if($roadTax==null)
+				return \Redirect::back()->with('error', 'Road Tax not found. Update failed');
+			
+			if($category!=null && $quarters!=null)
+			{
+				$roadTaxCheck = \App\RoadTax::where('mv_category_id', '=', $category)->where('quarters', '=', $quarters)->first();
+				if($roadTaxCheck!=null && $roadTaxCheck->id!=$roadTaxId)
+					return \Redirect::back()->with('error', 'Road Tax Update Failed. The details you provided already belongs to another Road Tax');
+			}
+		}
+		else
+		{
+			$roadTaxCheck = \App\RoadTax::where('mv_category_id', '=', $category)->where('quarters', '=', $quarters)->first();
+			if($roadTaxCheck!=null)
+				return \Redirect::back()->with('error', 'New Road Tax creation failed. The details you provided already belongs to a Road Tax for the selected vehicle category');
+				
+			$roadTax->mv_category_id = $category;
+			$roadTax->quarters = $quarters;
+		}
+		
+		
+		$roadTax->amount = $amount;
+		$roadTax->save();
+		
+		if($roadTaxId!=null)
+			return \Redirect::to('/taxes/list-road-taxes')->with('success', 'Road Tax edited successfully');
+		else
+			return \Redirect::to('/taxes/list-road-taxes')->with('success', 'New Road Tax saved successfully');
+	}
+	
+	public function getDeleteRoadTax($id){
+		$id = \Crypt::decrypt($id);
+		$roadTax = \App\RoadTax::where('id', '=', $id)->first();
+		$roadTax->delete();
+		return \Redirect::back()->with('success', 'Road Tax deleted successfully');
+		
+	}
+	
+	
+	public function getListCet(){
+		$listing = \DB::table('carbon_emission_surtaxes')->whereNull('carbon_emission_surtaxes.deleted_at')->get();
+		$header=  'All Carbon Emission Surtaxes';
+		$title=  'Carbon Emission Surtaxes';
+		$detail = 'List of all carbon emission surtaxes on the platform';
+		$type = "CET";
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>'All Carbon Emission Surtaxes', 'url'=>null, 'active'=>1]];
+		
+		return view('admin.listings', compact('type', 'listing', 'detail', 'title', 'header', 'breadcrumbs'));
+	}
+	
+	
+	public function getNewCet($id=NULL){
+		
+		$cet = null;
+		if($id!=null)
+		{
+			$id = \Crypt::decrypt($id);
+			$cet = \App\CarbonEmission::where('id', '=', $id)->first();
+			if($cet==null)
+				return \Redirect::back()->with('error', 'Carbon Emission Surtax not found');
+		}
+		$header=  $cet==null ? 'New Carbon Emission Surtax' : 'Update Carbon Emission Surtax';
+		$title=  $cet==null ? 'New Carbon Emission Surtax' : 'Update Carbon Emission Surtax';
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>$cet==null ? 'New Carbon Emission Surtax' : 'Update Carbon Emission Surtax', 'url'=>null, 'active'=>1]];
+		
+		return view('admin.new-cet', compact('cet', 'id', 'title', 'header', 'breadcrumbs'));
+	}
+	
+	public function postNewCet(\Illuminate\Http\Request $request){
+	
+		$all = $request->all();
+		$cetId = isset($all['cet']) ? $all['cet'] : null;
+		$enginecapacity = isset($all['enginecapacity']) ? $all['enginecapacity'] : null;
+		$amount = isset($all['amount']) ? $all['amount'] : null;
+		$cet = new \App\CarbonEmission();
+		if($cetId!=null)
+		{
+			$cet = \App\CarbonEmission::where('id', '=', $cetId)->first();
+			if($cet==null)
+				return \Redirect::back()->with('error', 'Carbon Emission Surtax not found. Update failed');
+			
+			
+		}
+		else
+		{
+			$cetCheck = \App\CarbonEmission::where('engine_capacity', '=', $enginecapacity)->first();
+			
+			if($cetCheck!=null)
+				return \Redirect::back()->with('error', 'New Carbon Emission Surtax Creation Failed. The details you provided already belongs to another Carbon Emission Surtax');
+				
+			
+		}
+		
+		$cet->engine_capacity = $enginecapacity;
+		$cet->annual_amount = $amount;
+		$cet->status = 1;
+		$cet->save();
+		
+		if($cetId!=null)
+			return \Redirect::to('/taxes/list-cet')->with('success', 'Carbon Emission Surtax edited successfully');
+		else
+			return \Redirect::to('/taxes/list-cet')->with('success', 'New Carbon Emission Surtax saved successfully');
+	}
+	
+	
+	public function getDeleteCet($id){
+		$id = \Crypt::decrypt($id);
+		$cet = \App\CarbonEmission::where('id', '=', $id)->first();
+		$cet->delete();
+		return \Redirect::back()->with('success', 'Carbon Emission Surtax deleted successfully');
+		
+	}
+	
+	
+	public function getListInsuranceProviders(){
+		$listing = \DB::table('insurance_providers')->whereNull('insurance_providers.deleted_at')->get();
+		$header=  'All Insurance Providers';
+		$title=  'Insurance Providers';
+		$detail = 'List of all insurance providers on the platform';
+		$type = "Insurance Providers";
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>'All Insurance Providers', 'url'=>null, 'active'=>1]];
+		
+		return view('admin.listings', compact('type', 'listing', 'detail', 'title', 'header', 'breadcrumbs'));
+	}
+	
+	public function getNewInsuranceProvider($id=NULL){
+		
+		$ip = null;
+		if($id!=null)
+		{
+			$id = \Crypt::decrypt($id);
+			$ip = \App\InsuranceProvider::where('id', '=', $id)->first();
+			if($ip==null)
+				return \Redirect::back()->with('error', 'Insurance provider not found');
+		}
+		$header=  $ip==null ? 'New Insurance Provider' : 'Update Insurance Provider';
+		$title=  $ip==null ? 'New Insurance Provider' : 'Update Insurance Provider';
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>$ip==null ? 'New Insurance Provider' : 'Update Insurance Provider', 'url'=>null, 'active'=>1]];
+		
+		return view('admin.new-insurance-provider', compact('ip', 'id', 'title', 'header', 'breadcrumbs'));
+	}
+	
+	public function postNewInsuranceProvider(\Illuminate\Http\Request $request){
+		
+		$all = $request->all();
+		$ipId = isset($all['ip']) ? $all['ip'] : null;
+		$providername = isset($all['providername']) ? $all['providername'] : null;
+		$addresss = isset($all['addresss']) ? $all['addresss'] : null;
+		$ip = new \App\InsuranceProvider();
+		if($ipId!=null)
+		{
+			$ip = \App\InsuranceProvider::where('id', '=', $ipId)->first();
+			if($ip==null)
+				return \Redirect::back()->with('error', 'Insurance Provider not found. Update failed');
+			
+			
+		}
+		else
+		{
+			$ipCheck = \App\InsuranceProvider::where('provider_name', '=', $providername)->first();
+			
+			if($ipCheck!=null)
+				return \Redirect::back()->with('error', 'New Insurance Provider Creation Failed. The details you provided already belongs to another insurance provider');
+				
+			
+		}
+		
+		$ip->provider_name = $providername;
+		$ip->address = $addresss;
+		$ip->status = 1;
+		$ip->save();
+		
+		if($ipId!=null)
+			return \Redirect::to('/insurance/list-insurance-providers')->with('success', 'Insurance Provider edited successfully');
+		else
+			return \Redirect::to('/insurance/list-insurance-providers')->with('success', 'New Insurance Provider saved successfully');
+	}
+	
+	public function getDeleteInsuranceProvider($id){
+		$id = \Crypt::decrypt($id);
+		$cet = \App\InsuranceProvider::where('id', '=', $id)->first();
+		$cet->delete();
+		return \Redirect::back()->with('success', 'Insurance Provider deleted successfully');
+		
+	}
+	
+	
+	public function getDisableInsuranceProvider($id){
+		$id = \Crypt::decrypt($id);
+		$ip = \App\InsuranceProvider::where('id', '=', $id)->first();
+		$ip->status = 0;
+		$ip->save();
+		return \Redirect::back()->with('success', 'Insurance Provider disabled successfully');
+		
+	}
+	
+	public function getEnableInsuranceProvider($id){
+		$id = \Crypt::decrypt($id);
+		$ip = \App\InsuranceProvider::where('id', '=', $id)->first();
+		$ip->status = 1;
+		$ip->save();
+		return \Redirect::back()->with('success', 'Insurance Provider enabled successfully');
+		
+	}
+	
+	
+	public function getListInsurancePackages(){
+		$listing = \DB::table('insurance_packages')->whereNull('insurance_packages.deleted_at')->get();
+		$header=  'All Insurance Packages';
+		$title=  'Insurance Packages';
+		$detail = 'List of all insurance packages on the platform';
+		$type = "Insurance Packages";
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>'All Insurance Packages', 'url'=>null, 'active'=>1]];
+		
+		return view('admin.listings', compact('type', 'listing', 'detail', 'title', 'header', 'breadcrumbs'));
+	}
+	
+	
+	
+	public function getNewInsurancePackage($id=NULL){
+	
+		$ip = null;
+		if($id!=null)
+		{
+			$id = \Crypt::decrypt($id);
+			$ip = \App\InsurancePackage::where('id', '=', $id)->first();
+			if($ip==null)
+				return \Redirect::back()->with('error', 'Insurance Package not found');
+		}
+		$insuranceProviders = \App\InsuranceProvider::where('status', '=', 1)->get();
+		$header=  $ip==null ? 'New Insurance Package' : 'Update Insurance Package';
+		$title=  $ip==null ? 'New Insurance Package' : 'Update Insurance Package';
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>$ip==null ? 'New Insurance Package' : 'Update Insurance Package', 'url'=>null, 'active'=>1]];
+		
+		return view('admin.new-insurance-package', compact('insuranceProviders', 'ip', 'id', 'title', 'header', 'breadcrumbs'));
+	}
+	
+	
+	
+	public function postNewInsurancePackage(\Illuminate\Http\Request $request){
+		
+		$all = $request->all();
+		$ipId = isset($all['ip']) ? $all['ip'] : null;
+		$providername = isset($all['providername']) ? $all['providername'] : null;
+		$vehicletype = isset($all['vehicletype']) ? $all['vehicletype'] : null;
+		$packagename = isset($all['packagename']) ? $all['packagename'] : null;
+		$details = isset($all['details']) ? $all['details'] : null;
+		$quarters = isset($all['quarters']) ? $all['quarters'] : null;
+		$amount = isset($all['amount']) ? $all['amount'] : null;
+		$insurancetype = isset($all['insurancetype']) ? $all['insurancetype'] : null;
+		
+		$rules = ['providername' => 'required', 'vehicletype' => 'required', 'packagename' => 'required', 
+			'details' => 'required', 'quarters' => 'required', 'amount' => 'required|numeric', 'insurancetype' => 'required'];
+			
+		$messages = [
+				'providername.required' => 'You must specify the insurance provider', 'vehicletype.required' => 'You must specify the vehicle type', 'packagename.required' => 'Provide the name of your package', 
+				'details.required' => 'You must provide details about this package', 'quarters.required' => 'You must provide the period the insurance package covers', 'amount.required' => 'You must provide a package cost', 
+				'amount.numeric' => 'Provide a numeric value for the cost of the package', 'insurancetype.required' => 'Specify the insurance type'
+			];
+		$validator = \Validator::make($request->all(), $rules, $messages);
+		if($validator->fails())
+		{
+			$errMsg = json_decode($validator->messages(), true);
+			$str_error = "";
+			$i = 1;
+			foreach($errMsg as $key => $value)
+			{
+				foreach($value as $val) {
+					$str_error = $str_error.($val)."<br>";
+				}
+			}
+			return \Redirect::back()->withInput($all)->with('error', $str_error);
+		}
+		$quarters = explode('|||', $quarters);
+		$ip = new \App\InsurancePackage();
+		if($ipId!=null)
+		{
+			$ip = \App\InsurancePackage::where('id', '=', $ipId)->first();
+			if($ip==null)
+				return \Redirect::back()->withInput($all)->with('error', 'Insurance Package not found. Update failed');
+			
+			$ipCheck = \App\InsurancePackage::where('package_name', '=', $packagename)->where('quarters', '=', $quarters[0])
+				->where('insurance_type', '=', $insurancetype)->where('vehicle_type', '=', $vehicletype)->whereNotIn('id', [$quarters])->first();
+			
+			if($ipCheck!=null)
+				return \Redirect::back()->withInput($all)->with('error', 'Insurance Package Update Failed. We found another package matching the package name and insurance period already on our system');
+				
+			
+		}
+		else
+		{
+			
+			$ipCheck = \App\InsurancePackage::where('package_name', '=', $packagename)->where('quarters', '=', $quarters[0])
+				->where('insurance_type', '=', $insurancetype)->where('vehicle_type', '=', $vehicletype)->first();
+			
+			if($ipCheck!=null)
+				return \Redirect::back()->withInput($all)->with('error', 'New Insurance Package Creation Failed. We found another package matching the package name and insurance period already on our system');
+				
+			
+		}
+		
+		
+		if($ipId==null)
+		{
+			$ip->insurance_provider_name = explode('|||', $providername)[1];
+			$ip->insurance_provider_id = explode('|||', $providername)[0];
+			$ip->quarters = $quarters[0];
+			$ip->min_quarters = sizeof($quarters)>2 ? $quarters[1] : null;
+			$ip->max_quarters = sizeof($quarters)>2 ? $quarters[2] : $quarters[1];
+			$ip->insurance_type = $insurancetype;
+			$ip->vehicle_type = $vehicletype;
+		}
+		$ip->package_name = $packagename;
+		$ip->valuation = $amount;
+		$ip->details = $details;
+		$ip->status = 1;
+		//dd($ip);
+		$ip->save();
+		
+		if($ipId!=null)
+			return \Redirect::to('/insurance/list-insurance-packages')->with('success', 'Insurance Package edited successfully');
+		else
+			return \Redirect::to('/insurance/list-insurance-packages')->with('success', 'New Insurance Package saved successfully');
+	}
+	
+	
+	public function getDeleteInsurancePackage($id){
+		$id = \Crypt::decrypt($id);
+		$cet = \App\InsurancePackage::where('id', '=', $id)->first();
+		$cet->delete();
+		return \Redirect::back()->with('success', 'Insurance Package deleted successfully');
+		
+	}
+	
+	
+	public function getDisableInsurancePackage($id){
+		$id = \Crypt::decrypt($id);
+		$ip = \App\InsurancePackage::where('id', '=', $id)->first();
+		$ip->status = 0;
+		$ip->save();
+		return \Redirect::back()->with('success', 'Insurance Package disabled successfully');
+		
+	}
+	
+	
+	public function getEnableInsurancePackage($id){
+		$id = \Crypt::decrypt($id);
+		$ip = \App\InsurancePackage::where('id', '=', $id)->first();
+		$ip->status = 1;
+		$ip->save();
+		return \Redirect::back()->with('success', 'Insurance Package enabled successfully');
+		
+	}
+	
+	public function getListUserAccounts(){
+		$listing = \DB::table('users')->whereNull('users.deleted_at')->get();
+		$header=  'All Users';
+		$title=  'Users';
+		$detail = 'List of all users on the platform';
+		$type = "Users";
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>'All Users', 'url'=>null, 'active'=>1]];
+		
+		return view('admin.listings', compact('type', 'listing', 'detail', 'title', 'header', 'breadcrumbs'));
+	}
+	
+	
+	public function getNewUserAccount($id=NULL){
+	
+		$useraccount = null;
+		if($id!=null)
+		{
+			$id = \Crypt::decrypt($id);
+			$useraccount = \App\User::where('id', '=', $id)->first();
+			if($useraccount==null)
+				return \Redirect::back()->with('error', 'User Account not found');
+		}
+		$header=  $useraccount==null ? 'New User Account' : 'Update User Account';
+		$title=  $useraccount==null ? 'New User Account' : 'Update User Account';
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>$useraccount==null ? 'New User Account' : 'Update User Account', 'url'=>null, 'active'=>1]];
+		$usertypes= \App\UserType::all();
+		return view('admin.new-user-account', compact('usertypes', 'useraccount', 'ip', 'id', 'title', 'header', 'breadcrumbs'));
+	}
+	
+	
+	public function postNewUserAccount(\Illuminate\Http\Request $request){
+		
+		$all = $request->all();
+		$mobile_number = 	isset($all['mobile_number']) ? $all['mobile_number'] : null;
+		$password = 		isset($all['password']) ? $all['password'] : null;
+		$cpassword = 		isset($all['cpassword']) ? $all['cpassword'] : null;
+		$first_name = 		isset($all['first_name']) ? $all['first_name'] : null;
+		$other_name = 		isset($all['other_name']) ? $all['other_name'] : null;
+		$last_name = 		isset($all['last_name']) ? $all['last_name'] : null;
+		$email_address = 	isset($all['email_address']) ? $all['email_address'] : null;
+		$role_type = 		isset($all['role_type']) ? $all['role_type'] : null;
+		$user_type = 		isset($all['user_type']) ? $all['user_type'] : null;
+		$userId = 			isset($all['userId']) ? $all['userId'] : null;
+		
+		
+		
+		$user = new \App\User();
+		if($userId!=null)
+		{
+			$user = \App\User::where('id', '=', $userId)->first();
+			if($user==null)
+				return \Redirect::back()->with('error', 'User Account not found. Update failed');
+			
+			
+			$user->username = 		$user->username;
+			$user->password = 		$user->password;
+			$user->status = 		$user->status;
+		}
+		else
+		{
+			$userTypeCheck = \App\User::where('username', '=', $email_address)->first();
+			
+			if($userTypeCheck!=null)
+				return \Redirect::back()->with('error', 'New User Account Creation Failed. The email address belongs to another registered user');
+				
+			$user->username = 		$email_address;
+			$user->password = 		Hash::make($password);
+			$user->status = 		'Active';
+		}
+		
+		
+		$user->first_name =	 	$first_name;
+		$user->last_name = 		$last_name;
+		$user->other_name = 	$other_name;
+		$user->mobile_number = 	$mobile_number;
+		$user->email_address = 	$email_address;
+		$user->role_type = 		$role_type;
+		if($user_type!=-1)
+		{
+			$user->user_type = 		explode('|||', $user_type)[1];
+		}
+		$user->save();
+		
+		if($userId!=null)
+			return \Redirect::to('/users/list-user-accounts')->with('success', 'User Account edited successfully');
+		else
+			return \Redirect::to('/users/list-user-accounts')->with('success', 'New User Account saved successfully');
+	}
+	
+	
+	public function getDisableUserAccount($id){
+		$id = \Crypt::decrypt($id);
+		$ip = \App\User::where('id', '=', $id)->first();
+		$ip->status = 'Deactivated';
+		$ip->save();
+		return \Redirect::back()->with('success', 'User account disabled successfully');
+		
+	}
+	
+	
+	public function getEnableUserAccount($id){
+		$id = \Crypt::decrypt($id);
+		$ip = \App\User::where('id', '=', $id)->first();
+		$ip->status = 'Active';
+		$ip->save();
+		return \Redirect::back()->with('success', 'User account enabled successfully');
+	}
+	
+	
+	public function getListUserRoles(){
+		$listing = \DB::table('user_types')->whereNull('user_types.deleted_at')->get();
+		$header=  'All User Roles';
+		$title=  'User Roles';
+		$detail = 'List of all user roles on the platform';
+		$type = "User Roles";
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>'All User Roles', 'url'=>null, 'active'=>1]];
+		
+		return view('admin.listings', compact('type', 'listing', 'detail', 'title', 'header', 'breadcrumbs'));
+	}
+	
+	
+	public function getNewUserRole($id=NULL){
+		
+		$ip = null;
+		if($id!=null)
+		{
+			$id = \Crypt::decrypt($id);
+			$ip = \App\UserType::where('id', '=', $id)->first();
+			if($ip==null)
+				return \Redirect::back()->with('error', 'User Role not found');
+		}
+		$header=  $ip==null ? 'New User Role' : 'Update User Role';
+		$title=  $ip==null ? 'New User Role' : 'Update User Role';
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>$ip==null ? 'New User Role' : 'Update User Role', 'url'=>null, 'active'=>1]];
+		
+		return view('admin.new-user-role', compact('insuranceProviders', 'ip', 'id', 'title', 'header', 'breadcrumbs'));
+	}
+	
+	public function postNewUserRole(\Illuminate\Http\Request $request){
+		
+		$all = $request->all();
+		$userrole = isset($all['userrole']) ? $all['userrole'] : null;
+		$rolename = isset($all['rolename']) ? $all['rolename'] : null;
+		
+		$userType = new \App\UserType();
+		if($userrole!=null)
+		{
+			$userType = \App\UserType::where('id', '=', $userrole)->first();
+			if($userType==null)
+				return \Redirect::back()->with('error', 'User Role not found. Update failed');
+			
+			
+		}
+		else
+		{
+			$userTypeCheck = \App\UserType::where('name', '=', $rolename)->first();
+			
+			if($userTypeCheck!=null)
+				return \Redirect::back()->with('error', 'New User Role Creation Failed. The role name belongs to another user role');
+				
+			
+		}
+		
+		$userType->created_by_user_id = \Auth::user() ? \Auth::user()->id : 0;
+		$userType->created_by_user_name =\Auth::user() ? (\Auth::user()->first_name. " ". \Auth::user()->last_name) : "";
+		$userType->name = $rolename;
+		$userType->save();
+		
+		if($userrole!=null)
+			return \Redirect::to('/users/list-user-roles')->with('success', 'User Role edited successfully');
+		else
+			return \Redirect::to('/users/list-user-roles')->with('success', 'New User Role saved successfully');
+	}
+	
+	public function getNewSlide($id=NULL)
+	{
+		
+		$cet = null;
+		if($id!=null)
+		{
+			$id = \Crypt::decrypt($id);
+			$cet = \App\Slide::where('id', '=', $id)->first();
+			if($cet==null)
+				return \Redirect::back()->with('error', 'Slide not found');
+		}
+		$header=  $cet==null ? 'New Slide' : 'Update Slide';
+		$title=  $cet==null ? 'New Slide' : 'Update Slide';
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>$cet==null ? 'New Slide' : 'Update Slide', 'url'=>null, 'active'=>1]];
+		
+		return view('admin.new-slide', compact('cet', 'id', 'title', 'header', 'breadcrumbs'));
+		
+	}
+	
+	
+	public function getListSlide(){
+		$listing = \DB::table('slides')->whereNull('slides.deleted_at')->get();
+		$header=  'All Slides';
+		$title=  'Slides';
+		$detail = 'List of all slides on the platform';
+		$type = "SLIDE";
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>'All Slides', 'url'=>null, 'active'=>1]];
+		
+		return view('admin.listings', compact('type', 'listing', 'detail', 'title', 'header', 'breadcrumbs'));
+	}
+	
+	public function postNewSlide(\Illuminate\Http\Request $request)
+	{
+		$text1 = $request->get('text1');
+		$text2 = $request->get('text2');
+		$text3 = $request->get('text3');
+		$actionbuttontext = $request->get('actionbuttontext');
+		$actionbuttonlink = $request->get('actionbuttonlink');
+		$image = $request->file('slideimage');
+		$cet = $request->get('cet');
+		
+		//dd($image);
+		if($cet==null)
+		{
+			$rules = ['slideimage' => 'required|image|max:1024'];
+			
+			$messages = [
+					'slideimage.required' => 'You must upload an image'
+				];
+			$validator = \Validator::make($request->all(), $rules, $messages);
+			if($validator->fails())
+			{
+				$errMsg = json_decode($validator->messages(), true);
+				$str_error = "";
+				$i = 1;
+				foreach($errMsg as $key => $value)
+				{
+					foreach($value as $val) {
+						$str_error = $str_error.($val)."<br>";
+					}
+				}
+				return \Redirect::back()->with('error', $str_error);
+			}
+		}
+		
+
+		$slide = new \App\Slide();
+		$slide->text1 = $text1;
+		$slide->text2 = $text2;
+		$slide->text3 = $text3;
+		$slide->actionbuttontext = $actionbuttontext;
+		$slide->actionbuttonlink = $actionbuttonlink;
+		$slide->status = '1';
+		$fileName = str_random(9);
+		if(!is_null($image))
+		{
+			$extension = $image->getClientOriginalExtension();
+			$fileName = $fileName.'.'.$extension;
+			$path = public_path('Assets\images');
+			$image->move($path, $fileName);
+			$slide->slide_image = "/Assets/images".$fileName;
+		}
+		//dd($slide);
+		if($slide->save())
+			return \Redirect::to('/slide/list-slides')->with('success', 'Slide edited successfully');
+		else
+			return \Redirect::to('/slide/list-slides')->with('success', 'New Slide saved successfully');
+	}
+	
+	
+	public function getNewPage($id=NULL)
+	{
+		
+		$page = null;
+		if($id!=null)
+		{
+			$id = \Crypt::decrypt($id);
+			$page = \App\Page::where('id', '=', $id)->first();
+			if($page==null)
+				return \Redirect::back()->with('error', 'Slide not found');
+		}
+		$header=  $page==null ? 'New Page' : 'Update Page';
+		$title=  $page==null ? 'New Page' : 'Update Page';
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>$page==null ? 'New Page' : 'Update Page', 'url'=>null, 'active'=>1]];
+		
+		return view('admin.new-page', compact('page', 'id', 'title', 'header', 'breadcrumbs'));
+		
+	}
+	
+	public function postNewPage(\Illuminate\Http\Request $request)
+    {
+        $input = ($request->all());
+		//dd($input);
+		$pg = $this->createAPage($input, \Auth::user()->id);
+		$id = in_array('id', array_keys($input)) ? $input['id'] : NULL;
+		
+		if($pg!=null)
+        {
+            if($id==NULL)
+                return \Redirect::to('/page/list-pages')->with('success', 'New web page created successfully');
+            else
+                return \Redirect::to('/page/list-pages')->with('success', 'Web page saved successfully');
+        }else
+        {
+            \Session::flash('error', 'Web page could not be created/saved successfully');
+            return Redirect::back();
+        }
+	}
+	
+	public function createAPage($input, $userId, $returnSuccessUrl=NULL, $returnFailUrl=NULL)
+	{
+
+        $rules = array(
+            'name' => 'required'
+        );
+        $msg = array(
+            'name.required' => 'Web Page title needs to be provided'
+        );
+        $validator = \Validator::make($input, $rules, $msg);
+        if ($validator->fails()){
+            $errors = $validator->messages();
+            $str = "";
+            foreach ( $errors->all() as $error ) {
+                $str = $str."".$error."<br />";
+            }
+
+            \Session::flash('error', $str);
+            return Redirect::back();
+        }
+
+        $trait = str_slug($input['name'], "-");
+        $contents = $input['page'];
+        $contentsNoHtml = strip_tags($input['page']);
+        $id = in_array('cet', array_keys($input)) ? $input['cet'] : NULL;
+
+        $pg = $id==NULL ? new \App\Page() : \App\Page::where('id', '=', ($id))->first();
+		
+        if($id==NULL) {
+            $pg->created_by_user_id = $userId;
+            $pg->status = 'Published';
+        }
+        $pg->page_name = $input['name'];
+        $pg->trait_url = $trait;
+        $pg->contents = $contents;
+        $pg->contents_no_html = $contentsNoHtml;
+		
+		//dd($pg);
+        if($pg->save())
+			return $pg;
+		else
+			return null;
+		
+    }
+	
+	public function getWebPage($pageurl)
+	{
+		$page = \App\Page::where('trait_url', '=', $pageurl)->where('status', '=', 'Published')->first();
+
+		
+		if($page==null)
+			return view('errors.404');
+		//$page = getPage($pageurl);
+
+		return view('webpage', compact('page'));
+	}
+	
+	public function getListPage(){
+		$listing = \DB::table('pages')->whereNull('pages.deleted_at')->get();
+		$header=  'All Pages';
+		$title=  'Pages';
+		$detail = 'List of all pages on the platform';
+		$type = "Page";
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>'All Pages', 'url'=>null, 'active'=>1]];
+		
+		return view('admin.listings', compact('type', 'listing', 'detail', 'title', 'header', 'breadcrumbs'));
+	}
+	
+	
+	public function changeCertificateStatus($certificateId, $status)
+	{
+		$certificate = \App\Certificate::where('certificate_no', '=', $certificateId)->first();
+		if($certificate==null)
+		{
+			return \Redirect::back()->with('errror', 'Invalid certificate selected');
+		}
+		
+		if($status=='CANCEL')
+			$certificate->status = 'Retracted';
+		else if($status=='ISSUE')
+			$certificate->status = 'Issued';
+			
+		$certificate->save();
+		return \Redirect::back()->with('success', 'The status of the certificate has been updated successfully');
+	}
+	
+	public function generateCertificateStepOne($transRef)
+	{
+		$transaction = \App\Transaction::where('transaction_ref', '=', $transRef)->first();
+		
+		if($transaction!=null && $transaction->collection_otp==null)
+		{
+			$transaction->collection_otp = mt_rand(10000, 99990);
+			$transaction->save();
+			
+			$payeeDetail = \App\Payee::where('trnx_id', '=', $transRef)->first();
+			
+			$msg = "OTP for collecting your RTSA Certificate is ".$transaction->collection_otp.".\nIf you have not requested to collect this certificate quickly notify any RATSA office";
+			try{
+				$getdata = http_build_query(
+					array(
+						'username' => 'rtsa',
+						'password' => 'password@1',
+						'mobiles'=>$payeeDetail->mobile_number,
+						'message'=>$msg,
+						'sender'=>'RTSA',
+						'type' => 'TEXT'					
+					)
+				);
+				
+				$url = "http://smsapi.probasesms.com/apis/text/index.php?".$getdata;
+				
+				$responseSms = file_get_contents($url);
+			}catch(\Exception $e)
+			{
+			
+			}
+			return \Redirect::to('/taxes/collect-certificate/'.$transRef)->with('success', 'An OTP has been sent to the applicants phone number. Request the applicant to provide the OTP to proceed with printing this Road Tax Certificate');
+		}
+		return \Redirect::back()->with('error', 'No Transaction matching the reference provided');
+	}
+	
+	public function getCertificateOTP($transRef)
+	{
+		$transaction = \App\Transaction::where('transaction_ref', '=', $transRef)->first();
+		if($transaction->collection_otp==null)
+		{
+			return \Redirect::to('/transactions/list')->with('error', 'Invalid process. You are trying to access an area you are not permitted to');
+		}
+		$header=  'Certificate OTP';
+		$title=  'Certificate OTP';
+		$detail = 'Provide the OTP sent to the applicants phone number';
+		$type = "Certificate OTP";
+		$breadcrumbs = [];
+		$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>'Certificate OTP', 'url'=>null, 'active'=>1]];
+		return view('admin.certificate-otp', compact('transRef', 'type', 'listing', 'detail', 'title', 'header', 'breadcrumbs'));
+	}
+	
+	public function postCertificateOTP(\Illuminate\Http\Request $request, $transRef)
+	{
+		$input = $request->all();
+		$transaction = \App\Transaction::where('transaction_ref', '=', $transRef)->first();
+		$payeeDetail = \App\Payee::where('trnx_id', '=', $transRef)->first();
+		if($payeeDetail!=null && $payeeDetail->fail_times==4)
+		{
+			return \Redirect::back()->with('error', 'This transaction is locked due to the number of times a certificate has failed to be printed. Unlock the transaction first before you can proceed');
+		}
+		
+		if($transaction!=null)
+		{
+			if($transaction->collection_otp!=null && $transaction->collection_otp==$input['otp'])
+			{
+				
+				$transactionRequestDetails = json_decode($transaction->transaction_request_details);
+				
+				$transactionComponents = \DB::table('transaction_breakdown')->join('transactions', 'transaction_breakdown.transaction_id', '=', 'transactions.id')->where('transactions.id', '=', $transaction->id)->get();
+				//dd($transactionComponents);
+				
+				
+				//dd($payeeDetail);
+				
+				//dd($input);
+				$certificate = \App\Certificate::where('transaction_id', '=', $transaction->id);
+				if($certificate->count()==0)
+				{
+					$getdata = http_build_query(
+						array(
+							'clientCode' => 'PROBASEPAY',
+							'userName' => 'PROBASEPAY',
+							'password'=>'password',
+							'mvnplate'=>$payeeDetail->vehicle_plate_number,
+							'gsm'=>$payeeDetail->mobile_number,
+							'timestamp' => date('d/m/Y H:i:s'),
+							'source' => 'probase',
+							'sourceID'=>'PB19001',
+							'type'=>'getMVDetails',
+							'country'=>'ZM'
+							
+						)
+					);
+					$url = "http://127.0.0.1:77/api/get-mv-details?".$getdata;
+					//echo $url;
+					//dd($url);
+					try{
+						$response = file_get_contents($url);
+						
+						$str = $response;
+						$response = json_decode($response);
+						//dd($response);
+						
+						if($response->reasonCode==0)
+						{
+							//dd(222);
+							
+							$certificate = new \App\Certificate();
+							$certificate->transaction_id = $transaction->id;
+							$certificate->certificate_no = mt_rand(100000000, 999999999);
+							$certificate->mvpn = $response->mvnplate;
+							$certificate->mvcn = $response->mvChassis;
+							$certificate->mobile_number = $payeeDetail->mobile_number;
+							$certificate->unique_id = $transRef;
+							$certificate->printed_by_user_id = \Auth::user() ? \Auth::user()->id : null;
+							$certificate->printed_by_user_name = \Auth::user() ? \Auth::user()->first_name." ".\Auth::user()->last_name : null;
+							$certificate->printed_at = date('Y-m-d H:i');
+							$certificate->engine = $response->mvEngine;
+							$certificate->make = $response->mvMake;
+							$certificate->model = $response->mvModel;
+							$certificate->mvColour = $response->mvColour;
+							$certificate->mvCarbonEmissionExpiry = $response->mvCarbonEmissionExpiry;
+							$roadTaxExpiryDate = DateTime::createFromFormat('m/d/Y H:i:s', date('m/d/Y H:i:s', strtotime($response->mvRoadTaxExpiry)))->format('m/d/Y H:i:s');
+							$date = str_replace('/', '-', $roadTaxExpiryDate);
+							$roadTaxExpiryDate = date('Y-m-d H:i:s', strtotime($date));
+							
+							$certificate->mvRoadTaxExpiry = $roadTaxExpiryDate;
+							$certificate->mvQuarter = $response->mvQuarter;
+							$certificate->mvIssuranceIssue = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', DateTime::createFromFormat('m/d/Y H:i:s', date('m/d/Y H:i:s', strtotime($response->mvIssuranceIssue)))->format('m/d/Y H:i:s'))));
+							$certificate->mvIssuranceExpiry = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', DateTime::createFromFormat('m/d/Y H:i:s', date('m/d/Y H:i:s', strtotime($response->mvIssuranceExpiry)))->format('m/d/Y H:i:s'))));
+							$certificate->mvFitnessExpiry = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', DateTime::createFromFormat('m/d/Y H:i:s', date('m/d/Y H:i:s', strtotime($response->mvFitnessExpiry)))->format('m/d/Y H:i:s'))));
+							$certificate->mvCategory = $response->mvCategory;
+							$certificate->mvCategoryCode = $response->mvCategoryCode;
+							$certificate->mvEngineCode = $response->mvEngineCode;
+							$certificate->mvEngineType = $response->mvEngineType;
+							$certificate->mvRoadTaxCharge = $response->mvRoadTaxCharge;
+							$certificate->mvCarbonEmissionCharge = $response->mvCarbonEmissionCharge;
+							$certificate->mvModelNumber = $response->mvModelNumber;
+							$certificate->mvPropelledBy = $response->mvPropelledBy;
+							$certificate->mvNetWeight = $response->mvNetWeight;
+							$certificate->mvGvmWeight = $response->mvGvmWeight;
+							$certificate->mvClass = $response->mvClass;
+							$certificate->mvSeatingCapacity = $response->mvSeatingCapacity;
+							$certificate->mvRegistrationAuthority = $response->mvRegistrationAuthority;
+							$certificate->mvMakeYear = $response->mvMakeYear;
+							$certificate->mvFirstRegistrationDate = $response->mvFirstRegistrationDate;
+							$certificate->mvOwnerType = $response->mvOwnerType;
+							$certificate->mvCompanyNumber = $response->mvCompanyNumber;
+							$certificate->mvCompanyName = $response->mvCompanyName;
+							$certificate->mvCompanyAdress = $response->mvCompanyAdress;
+							$certificate->mvCompanyCity = $response->mvCompanyCity;
+							$certificate->data = json_encode($response);
+							$certificate->tpin = $response->tpin;
+							$certificate->transaction_ref = $transRef;
+							$certificate->status = 'Issued';
+							//dd($certificate);
+							$certificate->save();
+							//'transaction_details', 
+							$header=  'Generate Certificate';
+							$title=  'Generate Certificate';
+							$detail = 'Generate Certificate';
+							$breadcrumbs = [];
+							$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>'Generate Certificate', 'url'=>null, 'active'=>1]];
+							
+						}
+						else
+						{
+							return \Redirect::back()->with('error', 'We could not generate a certificate for you at this time. Please try again later');
+						}
+					}
+					catch(\Exception $e)
+					{
+						return \Redirect::back()->with('error', 'Error experienced getting your  motor vehicle details. Please try again');
+					}
+					
+				}
+				else{
+					$certificate = $certificate->first();
+				}
+							
+				$transaction->certificate_no = $certificate->certificate_no;
+				$transaction->collection_otp = null;
+				$transaction->save();
+				
+				$header=  'Print Certificate';
+				$title=  '';
+				$title1=  'Print Certificate';
+				$detail = 'Print Certificate';
+				$breadcrumbs = [];
+				$breadcrumbs = [['name'=>'Dashboard', 'url'=>'/dashboard', 'active'=>0], ['name'=>'Print Certificate', 'url'=>null, 'active'=>1]];
+				$d = new DNS1D();
+				//dd();
+				$d->setStorPath(public_path()."\certificates");
+				$barCode = $d->getBarcodeHTML("9780691147727", "EAN13",3,70);	
+				//dd($certificate);
+				return view('admin.new-certificate', compact('barCode', 'certificate', 'title1', 'transactionComponents', 'response', 'transaction', 'listing', 'detail', 'title', 'header', 'breadcrumbs'));
+			}
+			else
+			{
+				$payeeDetail = \App\Payee::where('trnx_id', '=', $transRef)->first();
+				$payeeDetail->fail_times = $payeeDetail->fail_times + 1;
+				$payeeDetail->save();
+				
+				if($payeeDetail->fail_times==4)
+					return \Redirect::back()->with('error', 'Invalid OTP provided. The OTP you provided is not valid. This transaction has been locked.');
+				else
+					return \Redirect::back()->with('error', 'Invalid OTP provided. The OTP you provided is not valid.');
+			}
+					
+			
+		}
+		
+	}
+}
+
+?>
